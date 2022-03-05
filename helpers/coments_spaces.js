@@ -23,14 +23,14 @@ const removeFullLineComments = line => line.trim().replace(fullLineCommentRegex,
 const lineNotEmpty = line => line.length > 0;
 
 const removeCommentsAndSpaces = data => {
-	data = data
+  data = data
     .replace(/\r/g, '')
-		.split('\n')
-		.map(removeFullLineComments)
-		.filter(lineNotEmpty)
-		.map(removeCommentsInLine)
-		.join('\n');
-	return data;
+    .split('\n')
+    .map(removeFullLineComments)
+    .filter(lineNotEmpty)
+    .map(removeCommentsInLine)
+    .join('\n');
+  return data;
 };
 
 module.exports = {

@@ -2,58 +2,58 @@ const fs = require('fs').promises;
 const path = require('path');
 const { removeCommentsAndSpaces } = require('./helpers/coments_spaces');
 const {
-	reservedWords,
+  reservedWords,
 } = require('./operadores');
 
 const fileName = 'py_examples/Prog303.py';
 
 const readFile = async fileName => {
-	try {
-		const data = await fs.readFile(fileName, 'utf8');
-		console.log('================================================');
-		console.log(data);
-		return data;
-	} catch (err) {
-		throw err;
-	}
+  try {
+    const data = await fs.readFile(fileName, 'utf8');
+    console.log('================================================');
+    console.log(data);
+    return data;
+  } catch (err) {
+    throw err;
+  }
 };
 
 const countAndRemoveStrings = data => {
-	let count = 0;
-	// with single quotes
-	data = data.replace(/'(.*?)'/g, () => {
-		count++;
-		return '';
-	});
-	// doble quotes
-	data = data.replace(/"(.*?)"/g, () => {
-		count++;
-		return '';
-	});
-	console.log('==================without strings==================');
-	console.log(data);
-	return [data, count];
+  let count = 0;
+  // with single quotes
+  data = data.replace(/'(.*?)'/g, () => {
+    count++;
+    return '';
+  });
+  // doble quotes
+  data = data.replace(/"(.*?)"/g, () => {
+    count++;
+    return '';
+  });
+  console.log('==================without strings==================');
+  console.log(data);
+  return [data, count];
 };
 
 const cleanData = data => {
-	data = removeCommentsAndSpaces(data);
-	// let countStrings = 0;
-	// [data, countStrings] = countAndRemoveStrings(data);
-	// console.log('Count strings: ', countStrings);
-	//data = data.replace(/\n/g, ' ').replace(/\s+/g, ' ');
-	return data;
+  data = removeCommentsAndSpaces(data);
+  // let countStrings = 0;
+  // [data, countStrings] = countAndRemoveStrings(data);
+  // console.log('Count strings: ', countStrings);
+  //data = data.replace(/\n/g, ' ').replace(/\s+/g, ' ');
+  return data;
 };
 
 const processData = data => {
-	data = cleanData(data);
-	console.log('===================================================');
-	console.log(data);
-	return data;
+  data = cleanData(data);
+  console.log('===================================================');
+  console.log(data);
+  return data;
 };
 
 readFile(fileName)
-	.then(processData)
-	.catch(err => console.log(err));
+  .then(processData)
+  .catch(err => console.log(err));
 
 //? ver algoritmo de tokenización en algortimo.md
 
