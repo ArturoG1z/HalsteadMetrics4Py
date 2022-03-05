@@ -5,67 +5,67 @@ const { operators1Sybomls, operators2Sybomls, operators3Sybomls, reservedWords }
 const fileName = 'py-examples/test.py';
 
 const readFile = async fileName => {
-	try {
-		const data = await fs.readFile(fileName, 'utf8');
-		console.log('================================================');
-		console.log(typeof data);
-		return data;
-	} catch (err) {
-		throw err;
-	}
+  try {
+    const data = await fs.readFile(fileName, 'utf8');
+    console.log('================================================');
+    console.log(typeof data);
+    return data;
+  } catch (err) {
+    throw err;
+  }
 };
 
 const removeComments = data => {
-	data = data
-		.split('\n')
-		.map(line => line.replace(/\#.*/g, ''))
-		.join('\n');
-	console.log('==================without comments==================');
-	console.log(data);
-	return data;
+  data = data
+    .split('\n')
+    .map(line => line.replace(/\#.*/g, ''))
+    .join('\n');
+  console.log('==================without comments==================');
+  console.log(data);
+  return data;
 };
 
 const countAndRemoveStrings = data => {
-	let count = 0;
-	//triple quotes
-	data = data.replace(/'''(.*?)'''/g, () => {
-		count++;
-		return '';
-	});
-	// with single quotes
-	data = data.replace(/'(.*?)'/g, () => {
-		count++;
-		return '';
-	});
-	// doble quotes
-	data = data.replace(/"(.*?)"/g, () => {
-		count++;
-		return '';
-	});
-	console.log('==================without strings==================');
-	console.log(data);
-	return [data, count];
+  let count = 0;
+  //triple quotes
+  data = data.replace(/'''(.*?)'''/g, () => {
+    count++;
+    return '';
+  });
+  // with single quotes
+  data = data.replace(/'(.*?)'/g, () => {
+    count++;
+    return '';
+  });
+  // doble quotes
+  data = data.replace(/"(.*?)"/g, () => {
+    count++;
+    return '';
+  });
+  console.log('==================without strings==================');
+  console.log(data);
+  return [data, count];
 };
 
 const cleanData = data => {
-	let countStrings = 0;
-	[data, countStrings] = countAndRemoveStrings(data);
-	data = removeComments(data);
-	console.log('Count strings: ', countStrings);
-	data = data.replace(/\n/g, ' ').replace(/\s+/g, ' ');
-	return data;
+  let countStrings = 0;
+  [data, countStrings] = countAndRemoveStrings(data);
+  data = removeComments(data);
+  console.log('Count strings: ', countStrings);
+  data = data.replace(/\n/g, ' ').replace(/\s+/g, ' ');
+  return data;
 };
 
 const processData = data => {
-	data = cleanData(data);
-	console.log('===================================================');
-	console.log(data);
-	return data;
+  data = cleanData(data);
+  console.log('===================================================');
+  console.log(data);
+  return data;
 };
 
 readFile(fileName)
-	.then(processData)
-	.catch(err => console.log(err));
+  .then(processData)
+  .catch(err => console.log(err));
 
 //? algoritmo para separar operadores de los operandos
 //? primero quitar comentarios de una linea, con tratamiento para ver que no este dentro
