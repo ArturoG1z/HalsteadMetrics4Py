@@ -1,8 +1,9 @@
-const operators1Sybomls = ['"', "'", '(', '|', '^', '%', '&', ')', ':', '+', '*', '-', '/', '~', '=', '<', '>', ', ', '.' , '[', ']'];
-const operators2Sybomls = /\+=|\/=|-=|^=|\/\/|<=|\&=|\%=|\*\*|!=|<<|\*=|\|=|>=|>>|==/g;
-const operators3Symbols = />>=|<<=|\/\/=|\*\*=|/g;
-
-
+const stringRegex  = /(?<string>(?:'.*?'|".*?"))/g;
+const fullLineCommentRegex = /^#.*/g;
+const inLineCommentRegex = /\#.*/g;
+const operators1SybomlsRegex = ['"', "'", '(', '|', '^', '%', '&', ')', ':', '+', '*', '-', '/', '~', '=', '<', '>', ', ', '.' , '[', ']'];
+const operators2SybomlsRegex = /\+=|\/=|-=|^=|\/\/|<=|\&=|\%=|\*\*|!=|<<|\*=|\|=|>=|>>|==/g;
+const operators3SymbolsRegex = />>=|<<=|\/\/=|\*\*=|/g;
 const reservedWords = [
   'and',
   'elif',
@@ -47,8 +48,11 @@ const reservedWords = [
 ];
 
 module.exports = {
-  operators1Sybomls,
-  operators2Sybomls,
-  operators3Symbols,
+  fullLineCommentRegex,
+  inLineCommentRegex,
+  stringRegex,
+  operators1SybomlsRegex,
+  operators2SybomlsRegex,
+  operators3SymbolsRegex,
   reservedWords,
 }
