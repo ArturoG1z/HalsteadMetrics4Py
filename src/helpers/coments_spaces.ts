@@ -1,28 +1,27 @@
 const { stringRegex, fullLineCommentRegex, inLineCommentRegex } = require("../operadores");
 
-const replaceFromIndexWithSpaces = (str, index, count) => {
+const replaceFromIndexWithSpaces = (str: string, index: number, count: number): string => {
   return str.substring(0, index) + ' '.repeat(count) + str.substring(index + count);
 };
 
-const removeCommentsInLine = line => {
-  let isNotInComment = true;
+const removeCommentsInLine = (line: string): string => {
   let lineCopy = [...line].join('');
   let ocurrencia;
   while ((ocurrencia = stringRegex.exec(line)) !== null) {
     lineCopy = replaceFromIndexWithSpaces(lineCopy, ocurrencia.index, ocurrencia[0].length);
   }
   lineCopy = lineCopy.replace(inLineCommentRegex, '');
-  line = [...line]
-  line.length = lineCopy.length;
-  line = line.join('');
+  const lineArray = [...line]
+  lineArray.length = lineCopy.length;
+  line = lineArray.join('');
   return line;
 };
 
-const removeFullLineComments = line => line.trim().replace(fullLineCommentRegex, '');
+const removeFullLineComments = (line: string) => line.trim().replace(fullLineCommentRegex, '');
 
-const lineNotEmpty = line => line.length > 0;
+const lineNotEmpty = (line: string) => line.length > 0;
 
-const removeCommentsAndSpaces = data => {
+const removeCommentsAndSpaces = (data: string) => {
   data = data
     .replace(/\r/g, '')
     .split('\n')
@@ -33,6 +32,6 @@ const removeCommentsAndSpaces = data => {
   return data;
 };
 
-module.exports = {
+export = {
   removeCommentsAndSpaces,
 }

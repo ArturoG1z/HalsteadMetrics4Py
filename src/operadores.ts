@@ -47,7 +47,7 @@ const reservedWords = [
   'sqrt',
 ];
 
-module.exports = {
+export = {
   fullLineCommentRegex,
   inLineCommentRegex,
   stringRegex,
