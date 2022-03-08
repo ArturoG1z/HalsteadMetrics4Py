@@ -15,21 +15,21 @@ const decimalRegex = /(?<decimales>(?<![a-zA-Z_.])(?:\d+\.\d*|\d*\.\d+)(?<![a-zA
 const integerRegex = /(?<normales>(?<!\.)\b(?:\d+)\b(?!\.))/g;
 
 const regex4NumericalOperands = [
-	exponentialRegex,	
-	diffBaseRegex,
-	decimalRegex,
-	integerRegex,
+  exponentialRegex,	
+  diffBaseRegex,
+  decimalRegex,
+  integerRegex,
 ]
 
 const findStringOnOperands = (token: string, operands: IToken[], type = 'string') => {
-	return operands.find(operand => {
-		const value = operand.value.substring(1, operand.value.length - 1);
-		return value === token && operand.type === type;
-	});
+  return operands.find(operand => {
+    const value = operand.value.substring(1, operand.value.length - 1);
+    return value === token && operand.type === type;
+  });
 };
 
 export {
-	stringRegex,
-	regex4NumericalOperands,
-	findStringOnOperands,
+  stringRegex,
+  regex4NumericalOperands,
+  findStringOnOperands,
 };
