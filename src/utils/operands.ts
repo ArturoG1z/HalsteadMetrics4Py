@@ -1,3 +1,5 @@
+import IToken from "../models/token";
+
 const stringRegex  = /(?<string>("(?:\\.|[^\\])*?")|('(?:\\.|[^\\])*?'))/g;
 
 // (?<![a-zA-Z\.])\b(\d+|\d+.\d+|\.\d+|\d+\.)(?![a-zA-Z\.])\b
@@ -13,6 +15,12 @@ const difBaseRegex =
 const decimalRegex = /(?<decimales>(?<![a-zA-Z_.])(?:\d+\.\d*|\d*\.\d+)(?<![a-zA-Z_\.]))/g;
 const integerRegex = /(?<normales>(?<!\.)\b(?:\d+)\b(?!\.))/g;
 
+const findStringOnOperands = (token: string, operands: IToken[]) => {
+	return operands.find(operand => {
+		const value = operand.value.substring(1, operand.value.length - 1);
+		return value === token && operand.type === "string"
+	});
+};
 
 export {
 	stringRegex,
@@ -21,4 +29,5 @@ export {
 	difBaseRegex,
 	decimalRegex,
 	integerRegex,
+	findStringOnOperands,
 }

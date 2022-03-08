@@ -1,8 +1,42 @@
 import IToken from '../models/token';
-import { stringRegex } from './operands';
-const countAndRemoveStrings = (data: string): [string, IToken[]] => {
+import { reduceSpaces, strWithoutQuotes } from './tools';
+import { findStringOnOperands, stringRegex } from './operands';
+
+const getStringOperands = (lines: string[]): IToken[] => {
   let operands: IToken[] = [];
-	return [data, operands];
+  let matches: RegExpMatchArray[];
+  lines.forEach(line => {
+    matches = [...line.matchAll(stringRegex)];
+    matches.forEach(match => {
+      // getting substring without first and last characters that are the quotes
+      const value = strWithoutQuotes(match[0]);
+      const operand = findStringOnOperands(value, operands);
+      if (operand) {
+        operand.ocurrencies++;
+      } else {
+        operands.push({
+          id: operands.length + 1,
+          value: match[0],
+          ocurrencies: 1,
+          type: 'string',
+        });
+      }
+    });
+  });
+  return operands;
+}
+
+const removeStrings = (lines: string[]): string[] => {
+	return lines
+		.map(line => line.replace(stringRegex, ' '))
+    .map(reduceSpaces)
+    .filter(line => line.length > 0);
 };
 
-export default countAndRemoveStrings;
+const getAndRemoveStringsOperands = (lines: string[]): [string[], IToken[]] => {
+  const operands = getStringOperands(lines);
+  lines = removeStrings(lines);
+	return [lines, operands];
+};
+
+export default getAndRemoveStringsOperands;

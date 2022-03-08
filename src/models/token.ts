@@ -1,5 +1,6 @@
 export default interface IToken {
   id: number;
-  operand: string;
+  value: string;
   ocurrencies: number;
+  type: string;
 }

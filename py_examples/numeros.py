@@ -14,8 +14,11 @@ def mul(x,y):
     y *= 2
   return z
 mul(2,3)
-
+ok = "nel \'"
 y = 'comentario ' + 'de linea # si' # este se quita 'string en comentario xd'
-'string de linea # con \' \"comentario dentro'
+'string de linea # c  on \' \"comentario dentro'
 "string de linea # con coment\"ario dentro"    # este se quita
-''  # siii
+si = 'string de linea # con coment\"ario dentro'
+''  "" ''# siii
+'comentario ' 
+'nel \'' 
