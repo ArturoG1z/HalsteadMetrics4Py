@@ -62,4 +62,13 @@ const reservedWords = [
   'sqrt',
 ];
 
-export { operators1SybomlsArray, operators2SybomlsRegex, operators3SymbolsRegex, reservedWords };
+const parenthesis = [
+  /\(/g,
+  /\)/g,
+];
+const brackets = [
+  /\[/g,
+  /\]/g,
+];
+
+export { operators1SybomlsArray, operators2SybomlsRegex, operators3SymbolsRegex, reservedWords, parenthesis, brackets };

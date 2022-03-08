@@ -1,5 +1,5 @@
 import IToken from '../models/token';
-import { getTokensWithRegex, removeTokensFromFromLines, strWithoutQuotes } from './tools';
+import { getTokensWithRegex, removeTokensFromFromLines } from './tools';
 import { regex4NumericalOperands } from './operands';
 
 const getNumberOperands = (lines: string[], operands: IToken[]): [string[], IToken[]] => {
