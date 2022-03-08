@@ -1,5 +1,5 @@
 import IToken from '../models/token';
-import { reduceSpaces, strWithoutQuotes } from './tools';
+import { lineNotEmpty, reduceSpaces, strWithoutQuotes } from './tools';
 import { findStringOnOperands, stringRegex } from './operands';
 
 const getStringOperands = (lines: string[]): IToken[] => {
@@ -30,7 +30,7 @@ const removeStrings = (lines: string[]): string[] => {
 	return lines
 		.map(line => line.replace(stringRegex, ' '))
     .map(reduceSpaces)
-    .filter(line => line.length > 0);
+    .filter(lineNotEmpty);
 };
 
 const getAndRemoveStringsOperands = (lines: string[]): [string[], IToken[]] => {

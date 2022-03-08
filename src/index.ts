@@ -4,8 +4,8 @@ import path from 'path';
 import IToken from './models/token';
 import getAndRemoveStringsOperands from './utils/strings_process';
 
-const fileName = 'py_examples/Prog303.py';
-//const fileName = 'py_examples/numeros.py';
+// const fileName = 'py_examples/Prog303.py';
+const fileName = 'py_examples/numeros.py';
 
 const readFile = async (fileName: string) => {
 	try {
