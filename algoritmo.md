@@ -7,9 +7,9 @@
 5.  Buscar operandos de numeros con regex definidos por ahora en index.js ✅
 6.  Buscar parentesis y corchetes que habren y cierran ✅
 7.  Busqueda de operadores con simbolos no alfanumericos
-  - Buscar operadores de 3 simbolos con los siguientes regex remplazandolos por un espacio por ahora en operadores.js
-  - Buscar operadores de 2 simbolos con los siguientes regex remplazandolos por un espacio por ahora en operadores.js
-  - Buscar operadores de 1 simbolos con los siguientes regex remplazandolos por un espacio por ahora en operadores.js
+ - Buscar operadores de 3 simbolos con los siguientes regex remplazandolos por un espacio por ahora en operadores.js
+ - Buscar operadores de 2 simbolos con los siguientes regex remplazandolos por un espacio por ahora en operadores.js
+ - Buscar operadores de 1 simbolos con los siguientes regex remplazandolos por un espacio por ahora en operadores.js
 8.  Buscar operadores de definicion de funcion con su return (si es que tiene) remplazandolos por un espacio
 9. Buscar palabras reservadas con los siguientes regex remplazandolos por un espacio
 10. Todo lo restante serán operandos
