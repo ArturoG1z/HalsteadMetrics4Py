@@ -4,3 +4,4 @@ export default interface IToken {
   ocurrencies: number;
   type: string;
 }
+
