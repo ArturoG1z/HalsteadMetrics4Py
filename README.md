@@ -1,6 +1,8 @@
 # HalMe4Py or Halstead Metrics for Python
 
 This application allows to calculate the halstead metrics, entering as input a python text file, on which is performed a processing and classification of tokens, to obtain the occurrence of each of these tokens and perform the necessary operations to obtain the halstead metrics.
+## Preconditions
+- It is assumed that only syntactically and semantically valid text file entries are entered.
 
 ## Limitations and known issues: 
 - The aplications is intended for python only
@@ -10,7 +12,6 @@ This application allows to calculate the halstead metrics, entering as input a p
 
 1.- Globally install **node**
 You can download and install it from the official site https://nodejs.org/es/
-
 
 2.- Setup the project:
 Run `npm install` in the root directory of the project to install the dependencies.
