@@ -28,8 +28,11 @@ const findStringOnOperands = (token: string, operands: IToken[], type = 'string'
   });
 };
 
+const validVarAndFuncOperandsRegex = /\b(?:[a-zA-Z_][a-zA-Z0-9_]*)\b/g;
+
 export {
   stringRegex,
   regex4NumericalOperands,
   findStringOnOperands,
+  validVarAndFuncOperandsRegex
 };

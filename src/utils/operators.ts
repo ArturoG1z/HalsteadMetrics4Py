@@ -1,6 +1,13 @@
-const operators1SymbolRegex = /['|^%&=:~+*-/<,>.]/g;
+const parenthesis = [/\(/g, /\)/g];
+const brackets = [/\[/g, /\]/g];
+const braces = [/\{/g, /\}/g];
+
+const operators1SymbolRegex = /[\-|^%&=:~+*\/<,>]/g;
 const operators2SybomlsRegex = /\+=|\/=|-=|^=|\/\/|<=|\&=|\%=|\*\*|!=|<<|\*=|\|=|>=|>>|==/g;
-const operators3SymbolsRegex = />>=|<<=|\/\/=|\*\*=|/g;
+const operators3SymbolsRegex = />>=|<<=|\/\/=|\*\*=/g;
+
+const symbolsRegex = [operators3SymbolsRegex, operators2SybomlsRegex, operators1SymbolRegex];
+
 const reservedWords = [
 	'and',
 	'or',
@@ -34,9 +41,10 @@ const reservedWords = [
 	'class',
 	'lambda',
 	'global',
-  'nonlocal',
+	'nonlocal',
 	'del',
 ];
+
 const reservedWordsRegex = new RegExp(`\\b(${reservedWords.join('|')})\\b`, 'g');
 
 const defaultFunctionsOperators = [
@@ -66,7 +74,7 @@ const defaultFunctionsOperators = [
 	'getattr',
 	'globals',
 	'hasattr',
-  'help',
+	'help',
 	'hex',
 	'id',
 	'input',
@@ -86,7 +94,6 @@ const defaultFunctionsOperators = [
 	'oct',
 	'open',
 	'ord',
-	'pow',
 	'print',
 	'range',
 	'reversed',
@@ -105,7 +112,7 @@ const defaultFunctionsOperators = [
 ];
 const defaultFunctionsOperatorsRegex = new RegExp(`\\b(${defaultFunctionsOperators.join('|')})\\b`, 'g');
 
-const definitionAndReturnRegex = /\bdef|return\b/g;
+const definitionAndReturnRegex = [/\bdef\b/g, /\breturn\b/g];
 
 const mathMethods = [
 	'acos',
@@ -160,13 +167,24 @@ const mathMethods = [
 	'trunc',
 ];
 
+const point = /\./g;
+
+const mathWord = /\bmath\b/g;
+
+const pow = /\bpow\b/g;
+
 const mathOperands = ['e', 'inf', 'nan', 'pi', 'tau'];
 
 // python math functions
-const mathFunctionOperatorsRegex = new RegExp(`\s+(?<=math\.)(?:${mathMethods.join('|')})\b`, 'g');
+const mathFunctionOperatorsRegex = new RegExp(`\\b(?<=math\\.)(?:${mathMethods.join('|')})\\b`, 'g');
 
-const parenthesis = [/\(/g, /\)/g];
-const brackets = [/\[/g, /\]/g];
-const braces = [/\{/g, /\}/g];
+const wordOperatorsAndThenPoints = [
+	{ regex: reservedWordsRegex, type: 'reserved_word' },
+	{ regex: defaultFunctionsOperatorsRegex, type: 'default_function' },
+	{ regex: mathFunctionOperatorsRegex, type: 'library_function' },
+	{ regex: mathWord, type: 'library' },
+	{ regex: pow, type: 'default_function' },
+	{ regex: point, type: 'symbol' },
+];
 
-export { operators1SymbolRegex, operators2SybomlsRegex, operators3SymbolsRegex, reservedWords, parenthesis, brackets, braces };
+export { symbolsRegex, wordOperatorsAndThenPoints, parenthesis, brackets, braces, definitionAndReturnRegex };

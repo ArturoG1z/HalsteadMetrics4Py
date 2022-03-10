@@ -1,6 +1,6 @@
 import IToken from '../models/token';
 
-const reduceSpaces = (line: string) => line.replace(/[ \t]{2,}/, ' ').trim();
+const reduceSpaces = (line: string) => line.replace(/[ \t]{2,}/g, ' ').trim();
 
 const lineNotEmpty = (line: string) => line.length > 0;
 

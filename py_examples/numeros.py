@@ -6,13 +6,17 @@ def mul(x,y):
 #  y = '''
   esto = " s i "
   print(esto)
-  while ( x > (0) ):# sis jsaljkfdla ()
+  math.pow(x,y)
+  pow(x,y)
+  while ( x >= (0) ):# sis jsaljkfdla ()
     z = z + y/.123e-12
     x = x - 1
     y = z == x
     x **= 2
     y *= 2
-  return z  
+  return z
+
+
 help()
 arreglo = [1,2,3,4,5,6,7,8,[1, 2],10]
 mul(2,3)

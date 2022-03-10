@@ -2,11 +2,11 @@ import IToken from '../models/token';
 import { getTokensWithRegex, removeTokensFromFromLines, strWithoutQuotes } from './tools';
 import { findStringOnOperands, stringRegex } from './operands';
 
-const getAndRemoveStringsOperands = (lines: string[]): [string[], IToken[]] => {
-  const operands = getTokensWithRegex({
+const getAndRemoveStringsOperands = (lines: string[], operands: IToken[]): [string[], IToken[]] => {
+  getTokensWithRegex({
     lines,
     regex: stringRegex,
-    tokens: [],
+    tokens: operands,
     type: 'string',
     findFunction: findStringOnOperands,
     valuePreprossesing: strWithoutQuotes,

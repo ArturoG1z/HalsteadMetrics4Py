@@ -7,6 +7,7 @@ def mul(x,y):
   while ( x > 0 ):# sis jsaljkfdla
     z = z + y
     x = x - 1
+    # 32sdf
     # y = z == x
     # x **= 2
     # y *= 2
