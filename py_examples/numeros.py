@@ -25,3 +25,6 @@ si = 'string de linea # con coment\"ario dentro'
 'comentario ' 
 'nel \'' 
 help()
+x = {
+  'a': 1,
+}

@@ -167,5 +167,6 @@ const mathFunctionOperatorsRegex = new RegExp(`\s+(?<=math\.)(?:${mathMethods.jo
 
 const parenthesis = [/\(/g, /\)/g];
 const brackets = [/\[/g, /\]/g];
+const braces = [/\{/g, /\}/g];
 
-export { operators1SymbolRegex, operators2SybomlsRegex, operators3SymbolsRegex, reservedWords, parenthesis, brackets };
+export { operators1SymbolRegex, operators2SybomlsRegex, operators3SymbolsRegex, reservedWords, parenthesis, brackets, braces };
