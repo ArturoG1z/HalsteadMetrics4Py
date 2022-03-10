@@ -7,7 +7,7 @@ import getNumberOperands from './utils/number_processing';
 import getParenthesisAndBracketsOperators from './utils/parentheses_and_brackets';
 
 // const fileName = 'py_examples/Prog303.py';
-const fileName = 'py_examples/Prog301.py';
+const fileName = 'py_examples/test.py';
 //const fileName = 'py_examples/numeros.py';
 
 const readFile = async (fileName: string) => {
@@ -38,8 +38,10 @@ const processData = (data: string) => {
   [lines, operands] = getNumberOperands(lines, operands);
   [lines, operators, errors] = getParenthesisAndBracketsOperators(lines);
   console.log('===================================================');
-  console.log(lines);
+  console.log(lines, "\n");
+  console.log('OPERANDS TABLE');
   console.table(operands);
+  console.log('OPERATORS TABLE');
   console.table(operators);
   console.table(errors.length > 0 ? errors : 'No errors');
   console.timeEnd('halstead');
