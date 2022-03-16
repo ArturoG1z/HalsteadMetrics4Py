@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { IFile } from '../../models/interfaces/interfaces';
 
 @Component({
   selector: 'app-modal-showcode',
@@ -6,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./modal-showcode.page.scss'],
 })
 export class ModalShowcodePage implements OnInit {
-
-  constructor() { }
+  @Input() file: IFile;
+  constructor(
+    private modalController: ModalController
+  ) { }
 
   ngOnInit() {
   }
 
+  exitWithoutArgs() {
+    this.modalController.dismiss();
+  }
 }

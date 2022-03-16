@@ -13,7 +13,7 @@ import { ModalShowcodePage } from './modal-showcode.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    ModalShowcodePageRoutingModule
+    ModalShowcodePageRoutingModule,
   ],
   declarations: [ModalShowcodePage]
 })

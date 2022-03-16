@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IFile } from '../../models/interfaces/interfaces';
+import { ModalController } from '@ionic/angular';
+import { ModalShowcodePage } from '../modal-showcode/modal-showcode.page';
+import hljs from 'highlight.js';
+import python from 'highlight.js/lib/languages/python';
+
 @Component({
   selector: 'app-halstead-metrics',
   templateUrl: './halstead-metrics.page.html',
@@ -8,7 +13,9 @@ import { IFile } from '../../models/interfaces/interfaces';
 export class HalsteadMetricsPage implements OnInit {
   @ViewChild('fileInput') fileInput;
   file: IFile;
-  constructor() {
+  constructor(
+    private modalController: ModalController,
+  ) {
     this.file = {
       name: '',
       content: '',
@@ -44,8 +51,26 @@ export class HalsteadMetricsPage implements OnInit {
       reader.readAsText(file);
       reader.onload = (e) => {
         this.file.content = reader.result as string;
+        hljs.registerLanguage('python', python);
+        this.file.content = hljs.highlight('python', this.file.content).value;
       };
     }
+  }
+
+  async presentCodeModal() {
+    const modal = await this.modalController.create({
+      component: ModalShowcodePage,
+      componentProps: {
+        file: this.file
+      },
+    });
+    await modal.present();
+    // despues de la animacion de cierre
+    const resp = await modal.onDidDismiss();
+    // antes de la animacion de cierre
+    console.log('resp: ', resp);
+
+    return resp;
   }
 }
 

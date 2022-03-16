@@ -17,7 +17,6 @@ import { PipesModule } from '../../pipes/pipes.module';
     IonicModule,
     HalsteadMetricsPageRoutingModule,
     ComponentsModule,
-    PipesModule,
   ],
   declarations: [HalsteadMetricsPage]
 })

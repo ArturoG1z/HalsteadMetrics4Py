@@ -5,7 +5,7 @@
   [isHomePage]="true"
 ></app-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <ion-input
     type="file"
     accept=".txt,.py"
@@ -15,22 +15,24 @@
     (change)="onChangeFile($event)"
   ></ion-input>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title
-        >{{ file.content.length > 0 ? file.name : 'You have not opened any file'
-        }}</ion-card-title
-      >
-      <ion-card-subtitle>
-        {{ file.size !== 0 ? 'Size: ' + file.size : '' }}</ion-card-subtitle
-      >
-    </ion-card-header>
-    <ion-card-content class="code animate__animated animate__fadeIn" >
-      <p class="code" [innerHTML]="file.content | codeHighlight ">
-        
-      </p>
-    </ion-card-content>
-  </ion-card>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        <h2>
+          {{ file.content.length === 0 ? 'Open a file to start the calculation
+          of the Halstead metrics' : 'File opened: ' + file.name }}
+        </h2>
+      </ion-label>
+    </ion-list-header>
+    <ion-item
+      *ngIf="file.content.length > 0"
+      detail
+      button
+      (click)="presentCodeModal()"
+    >
+      <ion-label>See content in the file</ion-label>
+    </ion-item>
+  </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
