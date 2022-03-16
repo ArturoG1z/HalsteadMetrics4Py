@@ -56,6 +56,7 @@
         <ion-icon name="trash"></ion-icon>
       </ion-fab-button>
       <ion-fab-button
+        *ngIf="file.content.length > 0"
         color="secondary"
         class="fab-button-top-w-desc"
         data-desc="Process data"

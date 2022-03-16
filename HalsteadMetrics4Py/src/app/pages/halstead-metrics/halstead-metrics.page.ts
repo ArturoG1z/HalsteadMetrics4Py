@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IFile } from '../../models/interfaces/interfaces';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { ModalShowcodePage } from '../modal-showcode/modal-showcode.page';
 import hljs from 'highlight.js';
 import python from 'highlight.js/lib/languages/python';
@@ -15,10 +15,12 @@ export class HalsteadMetricsPage implements OnInit {
   file: IFile;
   constructor(
     private modalController: ModalController,
+    private toastCtrl: ToastController
   ) {
     this.file = {
       name: '',
       content: '',
+      contentHTML: '',
       type: '',
       size: 0
     };
@@ -39,7 +41,7 @@ export class HalsteadMetricsPage implements OnInit {
     this.fileInput.value = '';
   }
 
-  onChangeFile(event) {
+  async onChangeFile(event) {
     console.log(event.target.files);
     const files = event.target.files;
     if (files && files.length > 0) {
@@ -52,9 +54,19 @@ export class HalsteadMetricsPage implements OnInit {
       reader.onload = (e) => {
         this.file.content = reader.result as string;
         hljs.registerLanguage('python', python);
-        this.file.content = hljs.highlight('python', this.file.content).value;
+        this.file.contentHTML = hljs.highlight('python', this.file.content).value;
       };
     }
+    const toast = await this.toastCtrl.create({
+      message: `Now you can process the file ${this.file.name}, you can start this process
+      by clicking on the button 'process data' in the floating button down in the screen,
+      also you can see the code of the file in a modal pressing the option 'show code'`,
+      position: 'middle',
+      duration: 2900,
+      cssClass: 'toast-w-custom-width',
+      mode: 'ios',
+    });
+    toast.present();
   }
 
   async presentCodeModal() {
