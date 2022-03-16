@@ -1,12 +1,12 @@
-import { lineNotEmpty, replaceMatchWithSpaces } from './tools';
-import { stringRegex } from './operands';
+import { getAllMatches, lineNotEmpty, replaceMatchWithSpaces } from '../tools';
+import { stringRegex } from '../list-and-regex/operands';
 
 const fullLineCommentRegex = /^#.*/g;
 const inLineCommentRegex = /\#.*/g;
 
 const removeCommentsInLine = (line: string): string => {
   let lineCopy = line;
-  let matches = [...line.matchAll(stringRegex)];
+  const matches = getAllMatches(line, stringRegex);
   matches.forEach(match => {
     lineCopy = replaceMatchWithSpaces(lineCopy, match.index, match[0].length);
   });

@@ -1,4 +1,4 @@
-import IToken from '../models/token';
+import { IToken }from '../../models/interfaces/interfaces';
 
 const stringRegex = /(?<string>("(?:\\.|[^\\])*?")|('(?:\\.|[^\\])*?'))/g;
 

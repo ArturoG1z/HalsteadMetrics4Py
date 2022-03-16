@@ -1,4 +1,5 @@
-import IToken from '../models/token';
+/* eslint-disable @typescript-eslint/naming-convention */
+import { IToken }from '../../models/interfaces/interfaces';
 
 interface IInitialMetrics {
 	n1: number;
@@ -7,7 +8,7 @@ interface IInitialMetrics {
 	N2: number;
 }
 interface IHalsteadMetrics {
-  initial: IInitialMetrics,
+  initial: IInitialMetrics;
 	N: number;
 	n: number;
 	V: number;
@@ -18,14 +19,12 @@ interface IHalsteadMetrics {
 	B: number;
 }
 
-const getInitialVariables = (operators: IToken[], operands: IToken[]): IInitialMetrics => {
-	return {
-		n1: operators.length,
-		n2: operands.length,
-		N1: operators.reduce((acc, curr) => acc + curr.ocurrencies, 0),
-		N2: operands.reduce((acc, curr) => acc + curr.ocurrencies, 0),
-	};
-};
+const getInitialVariables = (operators: IToken[], operands: IToken[]): IInitialMetrics => ({
+	n1: operators.length,
+	n2: operands.length,
+	N1: operators.reduce((acc, curr) => acc + curr.ocurrencies, 0),
+	N2: operands.reduce((acc, curr) => acc + curr.ocurrencies, 0),
+});
 
 const getHalsteadMetrics = (operators: IToken[], operands: IToken[]): IHalsteadMetrics => {
   const initial = getInitialVariables(operators, operands);

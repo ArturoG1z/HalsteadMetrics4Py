@@ -1,6 +1,6 @@
-import IToken from '../models/token';
-import { getTokensWithRegex, removeTokensFromFromLines } from './tools';
-import { symbolsRegex } from './operators';
+import { IToken }from '../../models/interfaces/interfaces';
+import { getTokensWithRegex, removeTokensFromFromLines } from '../tools';
+import { symbolsRegex } from '../list-and-regex/operators';
 
 const getSymbolOperators = (lines: string[], operands: IToken[]): [string[], IToken[]] => {
   symbolsRegex.forEach((regex: RegExp, index) => {

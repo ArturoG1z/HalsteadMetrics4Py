@@ -1,6 +1,5 @@
 import { IToken } from '../models/interfaces/interfaces';
 
-
 const reduceSpaces = (line: string) => line.replace(/[ \t]{2,}/g, ' ').trim();
 
 const lineNotEmpty = (line: string) => line.length > 0;

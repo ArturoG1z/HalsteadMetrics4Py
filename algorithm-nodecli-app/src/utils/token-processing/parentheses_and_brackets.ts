@@ -1,10 +1,10 @@
-import IToken from '../models/token';
+import { IToken }from '../../models/interfaces/interfaces';
 import 'colors';
-import { countAndRemoveFromLines, findThenUpdateOrPush, lineNotEmpty, reduceSpaces } from './tools';
-import { brackets, parenthesis, braces } from './operators';
+import { countAndRemoveFromLines, findThenUpdateOrPush, lineNotEmpty, reduceSpaces } from '../tools';
+import { brackets, parenthesis, braces } from '../list-and-regex/operators';
 
 const titleCaseWord = (word: string): string => {
-	if (!word) return word;
+	if (!word){ return word; }
 	return word[0].toUpperCase() + word.substr(1).toLowerCase();
 };
 
@@ -13,20 +13,20 @@ const getParenthesisAndBracketsOperators = (lines: string[], operators: IToken[]
 	const types = ['parenthesis', 'brackets', 'braces'];
 	const strOpenAndCloseOperators = ['(...)', '[...]', '{...}'];
 	openAndCloseOperators.forEach((operator, index) => {
-		let countPair = operator.map(regex => {
+		const countPair = operator.map(regex => {
 			let count = 0;
 			[lines, count] = countAndRemoveFromLines(lines, regex);
 			return count;
 		});
-		if (countPair[0] != countPair[1]) {
+		if (countPair[0] !== countPair[1]) {
       errors = [...errors, `${titleCaseWord(types[index])} are not balanced `+
       `Number of ${types[index]} that open  = ${countPair[0]} `+
       `Number of ${types[index]} that close = ${countPair[1]}`];
 		}
-		if (countPair[0] === 0 && countPair[1] === 0) return;
+		if (countPair[0] === 0 && countPair[1] === 0) { return; }
 		findThenUpdateOrPush({
 			value: strOpenAndCloseOperators[index],
-			valueToPush: strOpenAndCloseOperators[index], 
+			valueToPush: strOpenAndCloseOperators[index],
 			tokens: operators,
 			type: types[index],
 			ocurrencies: Math.min(...countPair),

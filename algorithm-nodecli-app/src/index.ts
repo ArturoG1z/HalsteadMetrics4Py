@@ -1,15 +1,15 @@
-import { removeCommentsAndSpaces } from './utils/coments_spaces';
 import { promises as fs } from 'fs';
-import path from 'path';
-import IToken from './models/token';
-import getAndRemoveStringsOperands from './utils/string_processing';
-import getNumberOperands from './utils/number_processing';
-import getParenthesisAndBracketsOperators from './utils/parentheses_and_brackets';
-import getSymbolOperators from './utils/symbols_processing';
-import getWordsAndPointOperators from './utils/reserved_words_and_methods';
-import getDefReturnOperators from './utils/def_return';
-import getVarAndFuncOperands from './utils/variables_functions';
-import getHalsteadMetrics, { IHalsteadMetrics } from './utils/metric_calculation';
+
+import { removeCommentsAndSpaces } from './utils/token-processing/coments_spaces';
+import getAndRemoveStringsOperands from './utils/token-processing/string';
+import getNumberOperands from './utils/token-processing/number';
+import getParenthesisAndBracketsOperators from './utils/token-processing/parentheses_and_brackets';
+import getSymbolOperators from './utils/token-processing/symbols';
+import getWordsAndPointOperators from './utils/token-processing/reserved_words_and_methods';
+import getDefReturnOperators from './utils/token-processing/def_return';
+import getVarAndFuncOperands from './utils/token-processing/variables_functions';
+import getHalsteadMetrics, { IHalsteadMetrics } from './utils/token-processing/metric_calculation';
+import { IToken }from './models/interfaces/interfaces';
 
 // const fileName = 'py_examples/Prog303.py';
 const fileName = 'py_examples/test.py';
@@ -58,7 +58,7 @@ const processData = (data: string) => {
     console.log('No errors found');
   }
   console.log('HALSTEAD METRICS');
-  const halsteadMetrics: IHalsteadMetrics= getHalsteadMetrics(operators, operands);
+  const halsteadMetrics: IHalsteadMetrics = getHalsteadMetrics(operators, operands);
   console.table(halsteadMetrics);
   console.timeEnd('halstead');
 };

@@ -1,6 +1,6 @@
-import IToken from '../models/token';
-import { getTokensWithRegex, removeTokensFromFromLines, strWithoutQuotes } from './tools';
-import { findStringOnOperands, stringRegex } from './operands';
+import { IToken }from '../../models/interfaces/interfaces';
+import { getTokensWithRegex, removeTokensFromFromLines, strWithoutQuotes } from '../tools';
+import { findStringOnOperands, stringRegex } from '../list-and-regex/operands';
 
 const getAndRemoveStringsOperands = (lines: string[], operands: IToken[]): [string[], IToken[]] => {
   getTokensWithRegex({

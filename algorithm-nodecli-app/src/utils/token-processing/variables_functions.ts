@@ -1,9 +1,9 @@
-import IToken from '../models/token';
-import { getTokensWithRegex, removeTokensFromFromLines, strWithoutQuotes } from './tools';
-import { validVarAndFuncOperandsRegex } from './operands';
+import { IToken }from '../../models/interfaces/interfaces';
+import { getTokensWithRegex, removeTokensFromFromLines, strWithoutQuotes } from '../tools';
+import { validVarAndFuncOperandsRegex } from '../list-and-regex/operands';
 
 const areAnyRemainingInvalidWords = (lines: string[], errors: string[]): string[] => {
-  let remainingWords = lines.join(' ').split(' ');
+  const remainingWords = lines.join(' ').split(' ');
   if (remainingWords.length > 0) {
     errors = [
       ...errors,
