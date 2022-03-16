@@ -1,0 +1,63 @@
+<app-header
+  title="Halstead Metrics"
+  [isAboutShown]="true"
+  [isBackShown]="false"
+  [isHomePage]="true"
+></app-header>
+
+<ion-content>
+  <ion-input
+    type="file"
+    accept=".txt,.py"
+    class="btn-hidden"
+    title=" "
+    #fileInput
+    (change)="onChangeFile($event)"
+  ></ion-input>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title
+        >{{ file.content.length > 0 ? file.name : 'You have not opened any file'
+        }}</ion-card-title
+      >
+      <ion-card-subtitle>
+        {{ file.size !== 0 ? 'Size: ' + file.size : '' }}</ion-card-subtitle
+      >
+    </ion-card-header>
+    <ion-card-content *ngIf="file.content.length > 0">
+      <p style="white-space: pre">{{ file.content }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button
+        color="primary"
+        class="fab-button-top-w-desc"
+        data-desc="Open File"
+        (click)="openFile()"
+      >
+        <ion-icon name="document"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button
+        color="danger"
+        class="fab-button-top-w-desc"
+        data-desc="Clear"
+        (click)="onClickClearVariables()"
+      >
+        <ion-icon name="trash"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button
+        color="secondary"
+        class="fab-button-top-w-desc"
+        data-desc="Process data"
+      >
+        <ion-icon name="cog"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

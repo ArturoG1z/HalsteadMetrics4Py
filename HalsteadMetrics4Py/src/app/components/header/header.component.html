@@ -1,0 +1,30 @@
+<ion-header translucent class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" color="primary" *ngIf="isBackShown">
+      </ion-back-button>
+      <ion-button disabled *ngIf="isHomePage || isDBPage">
+        <ion-icon slot="icon-only" [name]="isHomePage ? 'calculator-outline' : 'list'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">
+      {{ title }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        routerLink="/about"
+        color="secondary"
+        [disabled]="isAboutDisabled"
+        *ngIf="isAboutShown"
+      >
+        <ion-icon slot="icon-only" name="information-circle"></ion-icon>
+      </ion-button>
+      <ion-button (click)="toggle()" *ngIf="isToggleShown">
+        <ion-icon
+          slot="icon-only"
+          [name]="isEditable ? 'close' : 'reorder-three'"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
