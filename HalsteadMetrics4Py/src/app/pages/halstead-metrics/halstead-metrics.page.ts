@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IFile } from '../../models/interfaces/interfaces';
-
 @Component({
   selector: 'app-halstead-metrics',
   templateUrl: './halstead-metrics.page.html',

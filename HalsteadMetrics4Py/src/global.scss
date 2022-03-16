@@ -25,6 +25,12 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@font-face {
+  font-family: "JetBrains Mono Nerd Font";
+  font-style: normal;
+  src: url('./assets/fonts/JetBrains\ Mono\ Regular\ Nerd\ Font\ Complete.ttf');
+}
+
 .btn-hidden {
   display: none;
 }
@@ -53,4 +59,29 @@ ion-fab-button.fab-button-top-w-desc[data-desc]::after {
 
 ion-toast.toast-w-custom-width {
   --max-width: 70%;
+}
+
+p.code {
+  font-family: 'JetBrains Mono Nerd Font', monospace;
+  font-size: .8rem;
+  white-space: pre;
+}
+
+ion-card-content.code {
+  overflow: auto;
+  padding: 1rem;
+  background-color: #292626;
+  color: white;
+}
+
+.hljs-string, .hljs-number {
+  color: #7ad0eb !important;
+}
+
+.hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-name {
+  color: #be69f7 !important;
+}
+
+.hljs-built_in, .hljs-type, .hljs-selector-class, .hljs-selector-attr, .hljs-selector-pseudo {
+  color: #ffda56 !important;
 }
