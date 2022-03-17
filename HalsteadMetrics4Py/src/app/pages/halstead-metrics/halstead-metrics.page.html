@@ -53,7 +53,7 @@
       <ion-item *ngFor="let metric of metricsArray" class="animate__animated animate__fadeIn">
         <ion-label>{{ metric[0] }}</ion-label>
         <ion-label slot="end" color="tertiary">
-          {{ parseFloat(metric[1].toFixed(4)) }}
+          {{ myParseFloat(metric[1]) }}
         </ion-label>
       </ion-item>
       <ion-item>
@@ -96,6 +96,15 @@
         data-desc="Process data"
       >
         <ion-icon name="cog"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button
+        *ngIf="this.metrics !== null && (!isItStored || canBeUpdated)"
+        color="secondary"
+        class="fab-button-top-w-desc"
+        (click)="onClickSaveData()"
+        data-desc="Save in database"
+      >
+        <ion-icon name="save"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>

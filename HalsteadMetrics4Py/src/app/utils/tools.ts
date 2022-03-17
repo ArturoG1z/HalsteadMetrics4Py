@@ -1,4 +1,4 @@
-import { IToken } from '../models/interfaces/interfaces';
+import { IHalsteadMetrics, IHalsteadMetricsBForFile, IToken } from '../models/interfaces/interfaces';
 
 const reduceSpaces = (line: string) => line.replace(/[ \t]{2,}/g, ' ').trim();
 
@@ -128,6 +128,59 @@ const countAndRemoveFromLines = (
   return [lines, count];
 };
 
+const myParseFloat = (value: number) => parseFloat('' + value.toFixed(4));
+
+const metricsObjectToArray = (metrics: IHalsteadMetrics) => {
+  const metricsArray = [];
+  let index = 0;
+  for (const key in metrics) {
+    if (metrics.hasOwnProperty(key)) {
+      if (key === 'initial') {
+        for (const secKey in metrics.initial) {
+          if (metrics.initial.hasOwnProperty(secKey)) {
+            metricsArray.push([
+              `${secKey}: ${metricNames[index]}`,
+              metrics.initial[secKey],
+              ,
+            ]);
+            index++;
+          }
+        }
+      } else {
+        metricsArray.push([
+          `${key}: ${metricNames[index]}`,
+          metrics[key],
+        ]);
+        index++;
+      }
+    }
+  }
+  return metricsArray;
+};
+
+const halsteadDBRowsAreTheSame = (row1: IHalsteadMetricsBForFile, row2: IHalsteadMetricsBForFile): boolean => (
+  row1.fileName === row2.fileName &&
+  row1.fileSize === row2.fileSize &&
+  row1.metrics.initial.n1 === row2.metrics.initial.n1 &&
+  row1.metrics.initial.n2 === row2.metrics.initial.n2 &&
+  row1.metrics.initial.N1 === row2.metrics.initial.N1 &&
+  row1.metrics.initial.N2 === row2.metrics.initial.N2
+);
+
+const metricNames = [
+  '# unique operands',
+  '# occur. operands',
+  '# unique operators',
+  '# occur. operators',
+  'Program Length',
+  'Program Vocabulary',
+  'Program Volume',
+  'Difficulty',
+  'Effort',
+  'Time',
+  'Bugs',
+];
+
 export {
   reduceSpaces,
   lineNotEmpty,
@@ -139,4 +192,8 @@ export {
   removeTokensFromFromLines,
   countAndRemoveFromLines,
   getAllMatches,
+  myParseFloat,
+  metricsObjectToArray,
+  halsteadDBRowsAreTheSame,
+  metricNames,
 };

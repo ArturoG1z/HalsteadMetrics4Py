@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   IFile,
   IHalsteadMetrics,
+  IHalsteadMetricsBForFile,
   IToken,
 } from '../../models/interfaces/interfaces';
 import { ModalController, ToastController } from '@ionic/angular';
@@ -10,6 +11,13 @@ import hljs from 'highlight.js';
 import python from 'highlight.js/lib/languages/python';
 import halsteadProcessData from '../../utils/processing';
 import { ModalTokensInfoPage } from '../modal-tokens-info/modal-tokens-info.page';
+import { StorageService } from '../../services/storage.service';
+import {
+  halsteadDBRowsAreTheSame,
+  metricNames,
+  metricsObjectToArray,
+  myParseFloat,
+} from 'src/app/utils/tools';
 
 @Component({
   selector: 'app-halstead-metrics',
@@ -24,22 +32,14 @@ export class HalsteadMetricsPage implements OnInit {
   errors: string[] = [];
   metrics: IHalsteadMetrics | null = null;
   metricsArray: any[][] = [];
-  metricNames = [
-    '# unique operands',
-    '# occur. operands',
-    '# unique operators',
-    '# occur. operators',
-    'Program Length',
-    'Program Vocabulary',
-    'Program Volume',
-    'Difficulty',
-    'Effort',
-    'Time',
-    'Bugs',
-  ];
+  isItStored = false;
+  canBeUpdated = false;
+  currRow: IHalsteadMetricsBForFile | null = null;
+  myParseFloat = myParseFloat;
   constructor(
     private modalController: ModalController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private storageService: StorageService
   ) {
     this.file = {
       name: '',
@@ -74,6 +74,9 @@ export class HalsteadMetricsPage implements OnInit {
     this.operators = [];
     this.errors = [];
     this.metrics = null;
+    this.isItStored = false;
+    this.canBeUpdated = false;
+    this.currRow = null;
   }
 
   async onChangeFile(event) {
@@ -98,17 +101,19 @@ export class HalsteadMetricsPage implements OnInit {
       hljs.registerLanguage('python', python);
       this.file.contentHTML = hljs.highlight('python', this.file.content).value;
     };
-    this
-      .presentToast(`Now you can process the file ${this.file.name}, you can start this process
+    this.presentToast(
+      `Now you can process the file ${this.file.name}, you can start this process
     by clicking on the button 'process data' in the floating button down in the screen,
-    also you can see the code of the file in a modal pressing the option 'show content in the file'`);
+    also you can see the code of the file in a modal pressing the option 'show content in the file'`,
+      3000
+    );
   }
 
-  async presentToast(message: string) {
+  async presentToast(message: string, duration: number) {
     const toast = await this.toastCtrl.create({
       message,
       position: 'middle',
-      duration: 2900,
+      duration,
       cssClass: 'toast-w-custom-width',
       mode: 'ios',
     });
@@ -125,8 +130,6 @@ export class HalsteadMetricsPage implements OnInit {
     await modal.present();
     // despues de la animacion de cierre
     const resp = await modal.onDidDismiss();
-    // antes de la animacion de cierre
-    console.log('resp: ', resp);
 
     return resp;
   }
@@ -154,36 +157,42 @@ export class HalsteadMetricsPage implements OnInit {
     this.operators = data.operators;
     this.errors = data.errors;
     this.metrics = data.halsteadMetrics;
-    this.metricsObjectToArray(this.metrics);
-  }
-
-  parseFloat(value: number) {
-    return parseFloat('' + value);
-  }
-
-  metricsObjectToArray(metrics: IHalsteadMetrics) {
-    this.metricsArray = [];
-    let index = 0;
-    for (const key in metrics) {
-      if (metrics.hasOwnProperty(key)) {
-        if (key === 'initial') {
-          for (const secKey in metrics.initial) {
-            if (metrics.initial.hasOwnProperty(secKey)) {
-              this.metricsArray.push([
-                `${secKey}: ${this.metricNames[index]}`,
-                metrics.initial[secKey],
-              ]);
-              index++;
-            }
-          }
-        } else {
-          this.metricsArray.push([
-            `${key}: ${this.metricNames[index]}`,
-            metrics[key],
-          ]);
-          index++;
-        }
+    this.metricsArray = metricsObjectToArray(this.metrics);
+    this.isItStored = await this.storageService.keyExists(this.file.name);
+    this.currRow = {
+      id: -1,
+      fileName: this.file.name,
+      fileSize: this.file.size,
+      metrics: this.metrics,
+    };
+    let message = '';
+    let time = 1400;
+    if (this.isItStored) {
+      const rowFromDB = await this.storageService.getValue(this.file.name);
+      if (halsteadDBRowsAreTheSame(this.currRow, rowFromDB)) {
+        message = `This file ${this.file.name} is already stored in the database`;
+      } else {
+        this.currRow.id = rowFromDB.id;
+        this.canBeUpdated = true;
+        message = `This file ${this.file.name} is already stored in the database, but it has different metrics`;
       }
+    } else {
+      message = `The file ${this.file.name} and his metrics are not
+      saved in the database, you can store it pressing the button 'save data'`;
+      time = 2700;
     }
+    this.presentToast(message, time);
+  }
+
+  async onClickSaveData() {
+    if (this.isItStored && !this.canBeUpdated) { return; }
+    this.currRow.id = await this.storageService.getMaxId() + 1;
+    await this.storageService.setValue(this.file.name, this.currRow);
+    this.presentToast(
+      `The file ${this.file.name} and his metrics are saved in the database`,
+      1500
+    );
+    this.isItStored = true;
+    this.canBeUpdated = false;
   }
 }

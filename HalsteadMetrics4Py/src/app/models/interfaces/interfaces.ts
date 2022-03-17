@@ -32,9 +32,17 @@ interface IHalsteadMetrics {
 	B: number;
 }
 
+interface IHalsteadMetricsBForFile {
+  id: number;
+  fileName: string;
+  fileSize: number;
+  metrics: IHalsteadMetrics;
+}
+
 export {
   IFile,
   IToken,
   IInitialMetrics,
-  IHalsteadMetrics
+  IHalsteadMetrics,
+  IHalsteadMetricsBForFile,
 };
