@@ -24,7 +24,7 @@ You can download and install it from the official site https://nodejs.org/es/
 4. Setup the project:
 Run `npm install` in the root directory of the project to install the dependencies.
 
-## How to run the CLI version
+### How to run the CLI version
 
 You can run it with the following commands
 
@@ -41,7 +41,7 @@ npm run start
 npm run build
 ```
 
-## How to run the mobile application
+### How to run the mobile application
 
 The HalMe4Py app is just like any other Ionic Angular app. 
 See [the docs](https://ionicframework.com/docs/) for more info.
