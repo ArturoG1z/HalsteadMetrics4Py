@@ -17,11 +17,11 @@ This application allows to calculate the halstead metrics, entering as input a p
 
 ## Installation
 
-1.- Fork and clone this repo.
-2.- Globally install **node**
+1. Fork and clone this repo.
+2. Globally install **node**
 You can download and install it from the official site https://nodejs.org/es/
-3.- The project has two variants, one for CLI with node and the version with the mobile application, to start using either of the two you must move to the directory path you want from the command line and perform the next step
-4.- Setup the project:
+3. The project has two variants, one for CLI with node and the version with the mobile application, to start using either of the two you must move to the directory path you want from the command line and perform the next step
+4. Setup the project:
 Run `npm install` in the root directory of the project to install the dependencies.
 
 ## How to run the CLI version
