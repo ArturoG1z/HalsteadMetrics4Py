@@ -48,20 +48,20 @@ const findThenUpdateOrPush = ({
   tokens,
   type,
   findFunction = findToken,
-  ocurrencies = null,
+  ocurrencies: occurrences = null,
 }: ArgsToUpdateOrPush) => {
   const token = findFunction(value, tokens, type);
   if (token) {
-    if (ocurrencies === null) {
-      token.ocurrencies++;
+    if (occurrences === null) {
+      token.occurrences++;
     } else {
-      token.ocurrencies = ocurrencies;
+      token.occurrences = occurrences;
     }
   } else {
     tokens.push({
       id: tokens.length + 1,
       value: valueToPush,
-      ocurrencies: ocurrencies === null ? 1 : ocurrencies,
+      occurrences: occurrences === null ? 1 : occurrences,
       type,
     });
   }

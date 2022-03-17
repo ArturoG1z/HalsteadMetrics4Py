@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 interface IFile {
   name: string;
   content: string;
@@ -8,7 +9,7 @@ interface IFile {
 interface IToken {
   id: number;
   value: string;
-  ocurrencies: number;
+  occurrences: number;
   type: string;
 }
 
@@ -36,4 +37,4 @@ export {
   IToken,
   IInitialMetrics,
   IHalsteadMetrics
-}
+};

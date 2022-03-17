@@ -1,10 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IFile, IHalsteadMetrics, IToken } from '../../models/interfaces/interfaces';
+import {
+  IFile,
+  IHalsteadMetrics,
+  IToken,
+} from '../../models/interfaces/interfaces';
 import { ModalController, ToastController } from '@ionic/angular';
 import { ModalShowcodePage } from '../modal-showcode/modal-showcode.page';
 import hljs from 'highlight.js';
 import python from 'highlight.js/lib/languages/python';
 import halsteadProcessData from '../../utils/processing';
+import { ModalTokensInfoPage } from '../modal-tokens-info/modal-tokens-info.page';
 
 @Component({
   selector: 'app-halstead-metrics',
@@ -18,6 +23,20 @@ export class HalsteadMetricsPage implements OnInit {
   operators: IToken[] = [];
   errors: string[] = [];
   metrics: IHalsteadMetrics | null = null;
+  metricsArray: any[][] = [];
+  metricNames = [
+    '# unique operands',
+    '# occur. operands',
+    '# unique operators',
+    '# occur. operators',
+    'Program Length',
+    'Program Vocabulary',
+    'Program Volume',
+    'Difficulty',
+    'Effort',
+    'Time',
+    'Bugs',
+  ];
   constructor(
     private modalController: ModalController,
     private toastCtrl: ToastController
@@ -27,7 +46,7 @@ export class HalsteadMetricsPage implements OnInit {
       content: '',
       contentHTML: '',
       type: '',
-      size: 0
+      size: 0,
     };
   }
 
@@ -37,7 +56,7 @@ export class HalsteadMetricsPage implements OnInit {
       content: '',
       contentHTML: '',
       type: '',
-      size: 0
+      size: 0,
     };
   }
 
@@ -59,11 +78,15 @@ export class HalsteadMetricsPage implements OnInit {
 
   async onChangeFile(event) {
     const files = event.target.files;
-    if (!files || files.length === 0) { return; }
+    if (!files || files.length === 0) {
+      return;
+    }
     //check if is not the same file selected
     const file: File = files.item(0);
 
-    if (this.file.name === file.name && this.file.size === file.size) { return; }
+    if (this.file.name === file.name && this.file.size === file.size) {
+      return;
+    }
     this.onClickClearVariables();
     this.file.name = file.name;
     this.file.type = file.type;
@@ -75,9 +98,10 @@ export class HalsteadMetricsPage implements OnInit {
       hljs.registerLanguage('python', python);
       this.file.contentHTML = hljs.highlight('python', this.file.content).value;
     };
-    this.presentToast(`Now you can process the file ${this.file.name}, you can start this process
+    this
+      .presentToast(`Now you can process the file ${this.file.name}, you can start this process
     by clicking on the button 'process data' in the floating button down in the screen,
-    also you can see the code of the file in a modal pressing the option 'show code'`);
+    also you can see the code of the file in a modal pressing the option 'show content in the file'`);
   }
 
   async presentToast(message: string) {
@@ -95,7 +119,24 @@ export class HalsteadMetricsPage implements OnInit {
     const modal = await this.modalController.create({
       component: ModalShowcodePage,
       componentProps: {
-        file: this.file
+        file: this.file,
+      },
+    });
+    await modal.present();
+    // despues de la animacion de cierre
+    const resp = await modal.onDidDismiss();
+    // antes de la animacion de cierre
+    console.log('resp: ', resp);
+
+    return resp;
+  }
+
+  async presentTokensModal(tokenType: string) {
+    const modal = await this.modalController.create({
+      component: ModalTokensInfoPage,
+      componentProps: {
+        tokenType,
+        tokens: tokenType === 'Operators' ? this.operators : this.operands,
       },
     });
     await modal.present();
@@ -113,10 +154,36 @@ export class HalsteadMetricsPage implements OnInit {
     this.operators = data.operators;
     this.errors = data.errors;
     this.metrics = data.halsteadMetrics;
-    console.table(this.operands);
-    console.table(this.operators);
-    console.table(this.errors);
-    console.table(this.metrics);
+    this.metricsObjectToArray(this.metrics);
+  }
+
+  parseFloat(value: number) {
+    return parseFloat('' + value);
+  }
+
+  metricsObjectToArray(metrics: IHalsteadMetrics) {
+    this.metricsArray = [];
+    let index = 0;
+    for (const key in metrics) {
+      if (metrics.hasOwnProperty(key)) {
+        if (key === 'initial') {
+          for (const secKey in metrics.initial) {
+            if (metrics.initial.hasOwnProperty(secKey)) {
+              this.metricsArray.push([
+                `${secKey}: ${this.metricNames[index]}`,
+                metrics.initial[secKey],
+              ]);
+              index++;
+            }
+          }
+        } else {
+          this.metricsArray.push([
+            `${key}: ${this.metricNames[index]}`,
+            metrics[key],
+          ]);
+          index++;
+        }
+      }
+    }
   }
 }
-

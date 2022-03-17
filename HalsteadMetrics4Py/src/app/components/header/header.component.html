@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/" color="primary" *ngIf="isBackShown">
       </ion-back-button>
-      <ion-button disabled *ngIf="isHomePage || isDBPage">
+      <ion-button disabled *ngIf="isHomePage || isDBPage" color="success">
         <ion-icon slot="icon-only" [name]="isHomePage ? 'calculator-outline' : 'list'"></ion-icon>
       </ion-button>
     </ion-buttons>

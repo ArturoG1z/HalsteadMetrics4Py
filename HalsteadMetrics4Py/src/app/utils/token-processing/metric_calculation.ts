@@ -4,8 +4,8 @@ import { IHalsteadMetrics, IInitialMetrics, IToken } from '../../models/interfac
 const getInitialVariables = (operators: IToken[], operands: IToken[]): IInitialMetrics => ({
 	n1: operators.length,
 	n2: operands.length,
-	N1: operators.reduce((acc, curr) => acc + curr.ocurrencies, 0),
-	N2: operands.reduce((acc, curr) => acc + curr.ocurrencies, 0),
+	N1: operators.reduce((acc, curr) => acc + curr.occurrences, 0),
+	N2: operands.reduce((acc, curr) => acc + curr.occurrences, 0),
 });
 
 const getHalsteadMetrics = (operators: IToken[], operands: IToken[]): IHalsteadMetrics => {
