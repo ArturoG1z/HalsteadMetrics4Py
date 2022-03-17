@@ -55,10 +55,13 @@
       >
         <ion-icon name="trash"></ion-icon>
       </ion-fab-button>
+    </ion-fab-list>
+    <ion-fab-list side="start">
       <ion-fab-button
-        *ngIf="file.content.length > 0"
+        *ngIf="file.content.length > 0 && this.metrics === null"
         color="secondary"
         class="fab-button-top-w-desc"
+        (click)="onClickProcessData()"
         data-desc="Process data"
       >
         <ion-icon name="cog"></ion-icon>

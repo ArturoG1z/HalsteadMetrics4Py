@@ -1,23 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { IToken }from '../../models/interfaces/interfaces';
-
-interface IInitialMetrics {
-	n1: number;
-	n2: number;
-	N1: number;
-	N2: number;
-}
-interface IHalsteadMetrics {
-  initial: IInitialMetrics;
-	N: number;
-	n: number;
-	V: number;
-	D: number;
-	L: number;
-	E: number;
-	T: number;
-	B: number;
-}
+import { IHalsteadMetrics, IInitialMetrics, IToken } from '../../models/interfaces/interfaces';
 
 const getInitialVariables = (operators: IToken[], operands: IToken[]): IInitialMetrics => ({
 	n1: operators.length,
@@ -40,4 +22,3 @@ const getHalsteadMetrics = (operators: IToken[], operands: IToken[]): IHalsteadM
 };
 
 export default getHalsteadMetrics;
-export { IHalsteadMetrics };
