@@ -1,7 +1,7 @@
 {
-  "name": "HalsteadMetrics4Py",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
+    "name": "halstead-metrics-4-py",
+    "integrations": {
+        "capacitor": {}
+    },
+    "type": "angular"
 }
