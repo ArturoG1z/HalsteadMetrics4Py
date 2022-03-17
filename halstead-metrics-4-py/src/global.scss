@@ -1,0 +1,87 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+@font-face {
+  font-family: "JetBrains Mono Nerd Font";
+  font-style: normal;
+  src: url('./assets/fonts/JetBrains\ Mono\ Regular\ Nerd\ Font\ Complete.ttf');
+}
+
+.btn-hidden {
+  display: none;
+}
+
+.red-content, .red-content .sc-ion-action-sheet-md{
+  color: red !important;
+}
+
+ion-fab-button.fab-button-top-w-desc[data-desc] {
+  position: relative;
+}
+
+ion-fab-button.fab-button-top-w-desc[data-desc]::after {
+  position: absolute;
+  content: attr(data-desc);
+  z-index: 999;
+  right: 3rem;
+  bottom: 4px;
+  background-color: var(--ion-color-dark);
+  opacity: 0.7;
+  padding: 9px;
+  border-radius: 15px;
+  color: black;
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12);
+}
+
+ion-toast.toast-w-custom-width {
+  --max-width: 70%;
+}
+
+p.code {
+  font-family: 'JetBrains Mono Nerd Font', monospace;
+  font-size: .8rem;
+  white-space: pre;
+}
+
+ion-card-content.code {
+  overflow: auto;
+  padding: 1rem;
+  background-color: #292626;
+  color: white;
+}
+
+.hljs-string, .hljs-number {
+  color: #7ad0eb !important;
+}
+
+.hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-name {
+  color: #be69f7 !important;
+}
+
+.hljs-built_in, .hljs-type, .hljs-selector-class, .hljs-selector-attr, .hljs-selector-pseudo {
+  color: #ffda56 !important;
+}

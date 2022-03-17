@@ -1,0 +1,15 @@
+<ion-tabs>
+
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="halstead-metrics">
+      <ion-icon [name]="selected === 'halstead-metrics' ? 'calculator' : 'calculator-outline'"></ion-icon>
+      <ion-label>Metrics</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="saved-calculations">
+      <ion-icon [name]="selected === 'saved-calculations' ? 'list' : 'list-outline'"></ion-icon>
+      <ion-label>Past Calculations</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+</ion-tabs>

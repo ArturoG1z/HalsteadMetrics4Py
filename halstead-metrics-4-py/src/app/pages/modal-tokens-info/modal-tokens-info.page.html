@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>List of {{ tokenType }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="exitWithoutArgs()">
+        <ion-icon slot="icon-only" name="exit" color="tertiary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-note slot="start" color="tertiary">
+        {{ tokenType === 'Operands' ? 'n2' : 'n1'}}
+      </ion-note>
+      <ion-label class="ion-text-center" color="secondary">
+        {{ tokenType === 'Operands' ? 'OPERAND' : 'OPERATOR'}}
+      </ion-label>
+      <ion-note slot="end" color="tertiary">
+        {{ tokenType === 'Operands' ? 'N2' : 'N1'}}
+      </ion-note>
+    </ion-item>
+    <ion-item
+      *ngFor="let token of tokens"
+      button
+      (click)="itemClicked($event, token)"
+    >
+      <ion-note slot="start" color="success">{{ token.id }}</ion-note>
+      <ion-label class="ion-text-center" color="primary">{{ token.value }}</ion-label>
+      <ion-note slot="end" color="secondary">{{ token.occurrences }}</ion-note>
+    </ion-item>
+  </ion-list>
+</ion-content>
