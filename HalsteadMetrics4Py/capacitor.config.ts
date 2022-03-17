@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'halstead-metrics-4-py',
+  appName: 'HalsteadMetrics4Py',
   webDir: 'www',
   bundledWebRuntime: false
 };

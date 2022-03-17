@@ -1,5 +1,5 @@
 {
-    "name": "halstead-metrics-4-py",
+    "name": "HalsteadMetrics4Py",
     "integrations": {
         "capacitor": {}
     },
