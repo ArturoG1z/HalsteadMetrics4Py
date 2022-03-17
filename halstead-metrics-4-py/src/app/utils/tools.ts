@@ -176,6 +176,7 @@ const metricNames = [
   'Program Vocabulary',
   'Program Volume',
   'Difficulty',
+  'Level',
   'Effort',
   'Time',
   'Bugs',
