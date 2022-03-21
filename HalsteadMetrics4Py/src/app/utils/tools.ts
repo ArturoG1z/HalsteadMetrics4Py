@@ -168,10 +168,10 @@ const halsteadDBRowsAreTheSame = (row1: IHalsteadMetricsBForFile, row2: IHalstea
 );
 
 const metricNames = [
-  '# unique operands',
-  '# occur. operands',
-  '# unique operators',
-  '# occur. operators',
+  '# Unique operators',
+  '# Unique operands',
+  '# Occurrence operators',
+  '# Occurrence operands',
   'Program Length',
   'Program Vocabulary',
   'Program Volume',
