@@ -18,11 +18,9 @@ const removeCommentsInLine = (line: string): string => {
   });
   lineCopy = lineCopy.replace(inLineCommentRegex, '');
   const lineArray = [...line];
+  commentCount += lineCopy.length !== lineArray.length ? 1 : 0;
   lineArray.length = lineCopy.length;
   line = lineArray.join('').trim();
-  if (lineCopy.length !== line.length) {
-    commentCount++;
-  }
   return line;
 };
 let commentCount = 0;
