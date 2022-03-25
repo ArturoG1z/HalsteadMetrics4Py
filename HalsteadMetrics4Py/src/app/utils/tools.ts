@@ -1,4 +1,8 @@
-import { IHalsteadMetrics, IHalsteadMetricsBForFile, IToken } from '../models/interfaces/interfaces';
+import {
+  IHalsteadMetrics,
+  IHalsteadMetricsBForFile,
+  IToken,
+} from '../models/interfaces/interfaces';
 
 const reduceSpaces = (line: string) => line.replace(/[ \t]{2,}/g, ' ').trim();
 
@@ -20,12 +24,20 @@ type FindFunction = (
 ) => IToken | undefined;
 type ValuePreprossesing = ((value: string) => string) | undefined;
 type TokenFinderArgs = {
-  lines: string[];
+  lines?: string[];
   regex: RegExp;
   tokens: IToken[];
   type: string;
+  str?: string;
   findFunction?: FindFunction;
   valuePreprossesing?: ValuePreprossesing;
+  secondaryTokens?: IToken[];
+  secondaryType?: string;
+  regexToFindInsideToken?: RegExp | undefined;
+  objIfIsFuncToken?: {
+    isFunction?: boolean;
+    subsCountFromParentesisOcurrs?: number;
+  } | undefined;
 };
 type ArgsToUpdateOrPush = {
   value: string;
@@ -67,6 +79,22 @@ const findThenUpdateOrPush = ({
   }
 };
 
+const findThenSubsOcurrIfEmptyDelete = (
+  value: string,
+  tokens: IToken[],
+  type: string,
+  amountToSubstract: number,
+  findFunction: FindFunction = findToken,
+) => {
+  const token = findFunction(value, tokens, type);
+  if (token) {
+    token.occurrences -= amountToSubstract;
+    if (token.occurrences <= 0) {
+      tokens.splice(tokens.indexOf(token), 1);
+    }
+  }
+};
+
 const getAllMatches = (line: string, regex: RegExp): RegExpExecArray[] => {
   const matches = [];
   let match: RegExpExecArray | null;
@@ -79,6 +107,49 @@ const getAllMatches = (line: string, regex: RegExp): RegExpExecArray[] => {
   return matches;
 };
 
+const findMatchesInStrAndRegisterOnTokens = ({
+  lines = [],
+  regex,
+  tokens,
+  type,
+  str = '',
+  findFunction = findToken,
+  valuePreprossesing = undefined,
+  secondaryTokens = [],
+  secondaryType = '',
+  regexToFindInsideToken = undefined,
+  objIfIsFuncToken = undefined
+}: TokenFinderArgs) => {
+  const matches = getAllMatches(str, regex);
+  matches.forEach((match) => {
+    let value =
+      valuePreprossesing === undefined
+        ? match[0]
+        : valuePreprossesing(match[0]);
+    if (regexToFindInsideToken !== undefined) {
+      findMatchesInStrAndRegisterOnTokens({
+        regex: regexToFindInsideToken,
+        str: value,
+        tokens: secondaryTokens,
+        type: secondaryType,
+      });
+    }
+    let valueToPush = match[0];
+    if(objIfIsFuncToken?.isFunction) {
+      objIfIsFuncToken.subsCountFromParentesisOcurrs++;
+      value = value + '(...)';
+      valueToPush = value;
+    }
+    findThenUpdateOrPush({
+      value,
+      valueToPush,
+      tokens,
+      type,
+      findFunction,
+    });
+  });
+};
+
 const getTokensWithRegex = ({
   lines,
   regex,
@@ -86,22 +157,23 @@ const getTokensWithRegex = ({
   type,
   findFunction = findToken,
   valuePreprossesing = undefined,
+  secondaryTokens = [],
+  secondaryType = '',
+  regexToFindInsideToken = undefined,
+  objIfIsFuncToken = undefined
 }: TokenFinderArgs): IToken[] => {
-  let matches: RegExpMatchArray[];
   lines.forEach((line) => {
-    matches = getAllMatches(line, regex);
-    matches.forEach((match) => {
-      const value =
-        valuePreprossesing === undefined
-          ? match[0]
-          : valuePreprossesing(match[0]);
-      findThenUpdateOrPush({
-        value,
-        valueToPush: match[0],
-        tokens,
-        type,
-        findFunction,
-      });
+    findMatchesInStrAndRegisterOnTokens({
+      str: line,
+      regex,
+      tokens,
+      type,
+      findFunction,
+      valuePreprossesing,
+      secondaryTokens,
+      secondaryType,
+      regexToFindInsideToken,
+      objIfIsFuncToken,
     });
   });
   return tokens;
@@ -147,10 +219,7 @@ const metricsObjectToArray = (metrics: IHalsteadMetrics) => {
           }
         }
       } else {
-        metricsArray.push([
-          `${key}: ${metricNames[index]}`,
-          metrics[key],
-        ]);
+        metricsArray.push([`${key}: ${metricNames[index]}`, metrics[key]]);
         index++;
       }
     }
@@ -158,14 +227,16 @@ const metricsObjectToArray = (metrics: IHalsteadMetrics) => {
   return metricsArray;
 };
 
-const halsteadDBRowsAreTheSame = (row1: IHalsteadMetricsBForFile, row2: IHalsteadMetricsBForFile): boolean => (
+const halsteadDBRowsAreTheSame = (
+  row1: IHalsteadMetricsBForFile,
+  row2: IHalsteadMetricsBForFile
+): boolean =>
   row1.fileName === row2.fileName &&
   row1.fileSize === row2.fileSize &&
   row1.metrics.initial.n1 === row2.metrics.initial.n1 &&
   row1.metrics.initial.n2 === row2.metrics.initial.n2 &&
   row1.metrics.initial.N1 === row2.metrics.initial.N1 &&
-  row1.metrics.initial.N2 === row2.metrics.initial.N2
-);
+  row1.metrics.initial.N2 === row2.metrics.initial.N2;
 
 const metricNames = [
   '# Unique operators',
@@ -189,6 +260,7 @@ export {
   replaceMatchWithSpaces,
   TokenFinderArgs,
   findThenUpdateOrPush,
+  findThenSubsOcurrIfEmptyDelete,
   getTokensWithRegex,
   removeTokensFromFromLines,
   countAndRemoveFromLines,

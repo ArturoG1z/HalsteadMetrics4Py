@@ -28,8 +28,13 @@ const halsteadProcessData = (
   halsteadMetrics: IHalsteadMetrics;
 } => {
   restartVariables();
-  let lines = removeCommentsAndSpaces(data);
-  [lines, operands] = getAndRemoveStringsOperands(lines, operands);
+  let lines = [];
+  [lines, operators] = removeCommentsAndSpaces(data, operators);
+  [lines, operands, operators] = getAndRemoveStringsOperands(
+    lines,
+    operands,
+    operators
+  );
   [lines, operands] = getNumberOperands(lines, operands);
   [lines, operators, errors] = getParenthesisAndBracketsOperators(
     lines,

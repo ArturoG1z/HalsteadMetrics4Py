@@ -146,8 +146,7 @@ export class HalsteadMetricsPage implements OnInit {
     // despues de la animacion de cierre
     const resp = await modal.onDidDismiss();
     // antes de la animacion de cierre
-    console.log('resp: ', resp);
-
+    // console.log('resp: ', resp);
     return resp;
   }
 
