@@ -7,9 +7,14 @@ const exponentialRegex =
 const diffBaseRegex =
   /(?<difBaseTo>(?<binary>\b(?:0b[01]+)\b)|(?<octal>\b(?:0o[0-7]+)\b)|(?<hexadecimal>\b(?:0x[a-fA-F0-9]+)\b))/g;
 
+const decimalStrRegex =
+  '(?<decimal>(?:d+.d*|d*.d+))';
 const decimalRegex =
-  /(?<decimales>(?<![a-zA-Z_.])(?:\d+\.\d*|\d*\.\d+)(?<![a-zA-Z_\.]))/g;
-const integerRegex = /(?<normales>(?<!\.)\b(?:\d+)\b(?!\.))/g;
+  /(?<decimal>(?<![a-zA-Z_.])(?:\d+\.\d*|\d*\.\d+)(?<![a-zA-Z_\.]))/g;
+const integerRegex = /(?<normal>(?<!\.)\b(?:\d+)\b(?!\.))/g;
+
+const insideStringOperators =
+  /(?<!\\)%(?:(?<decimales>(?:\d+\.\d*|\d*\.\d+))|(?<normales>(?<!\.)(?:\d+)(?!\.))){0,1}[fds]/g;
 
 const regex4NumericalOperands = [
   exponentialRegex,
@@ -34,5 +39,6 @@ export {
   stringRegex,
   regex4NumericalOperands,
   findStringOnOperands,
+  insideStringOperators,
   validVarAndFuncOperandsRegex,
 };
