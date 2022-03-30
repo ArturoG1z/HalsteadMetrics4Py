@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>List of {{ tokenType }}</ion-title>
+    <ion-title>Lista de {{ tokenType === 'Operands' ? 'Operandos' : 'Operadores' }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="exitWithoutArgs()">
         <ion-icon slot="icon-only" name="exit" color="tertiary"></ion-icon>
@@ -16,7 +16,7 @@
         {{ tokenType === 'Operands' ? 'n2' : 'n1'}}
       </ion-note>
       <ion-label class="ion-text-center" color="secondary">
-        {{ tokenType === 'Operands' ? 'OPERAND' : 'OPERATOR'}}
+        {{ tokenType === 'Operands' ? 'OPERANDO' : 'OPERADOR'}}
       </ion-label>
       <ion-note slot="end" color="tertiary">
         {{ tokenType === 'Operands' ? 'N2' : 'N1'}}

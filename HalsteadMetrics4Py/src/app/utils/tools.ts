@@ -202,7 +202,7 @@ const countAndRemoveFromLines = (
 
 const myParseFloat = (value: number) => parseFloat('' + value.toFixed(4));
 
-const metricsObjectToArray = (metrics: IHalsteadMetrics) => {
+const metricsObjectToArray = (metrics: IHalsteadMetrics, withNames = true) => {
   const metricsArray = [];
   let index = 0;
   for (const key in metrics) {
@@ -211,7 +211,7 @@ const metricsObjectToArray = (metrics: IHalsteadMetrics) => {
         for (const secKey in metrics.initial) {
           if (metrics.initial.hasOwnProperty(secKey)) {
             metricsArray.push([
-              `${secKey}: ${metricNames[index]}`,
+              withNames ? `${secKey}: ${metricNames[index]}` : secKey,
               metrics.initial[secKey],
               ,
             ]);
@@ -219,7 +219,9 @@ const metricsObjectToArray = (metrics: IHalsteadMetrics) => {
           }
         }
       } else {
-        metricsArray.push([`${key}: ${metricNames[index]}`, metrics[key]]);
+        metricsArray.push([
+          withNames ? `${key}: ${metricNames[index]}` : key,
+          metrics[key]]);
         index++;
       }
     }
@@ -239,17 +241,17 @@ const halsteadDBRowsAreTheSame = (
   row1.metrics.initial.N2 === row2.metrics.initial.N2;
 
 const metricNames = [
-  '# Unique operators',
-  '# Unique operands',
-  '# Occurrence operators',
-  '# Occurrence operands',
-  'Program Length',
-  'Program Vocabulary',
-  'Program Volume',
-  'Difficulty',
-  'Level',
-  'Effort',
-  'Time',
+  '# Operadores unicos',
+  '# Operandos unicos',
+  '# Ocurrencia de operadores',
+  '# Ocurrencia de operandos',
+  'Longitud del programa',
+  'Vocabulario',
+  'Volumen',
+  'Difficultad',
+  'Nivel',
+  'Esfuerzo',
+  'Tiempo',
   'Bugs',
 ];
 

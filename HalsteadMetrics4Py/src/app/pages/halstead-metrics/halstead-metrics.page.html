@@ -1,5 +1,5 @@
 <app-header
-  title="Halstead Metrics"
+  title="Metricas Halstead"
   [isAboutShown]="true"
   [isBackShown]="false"
   [isHomePage]="true"
@@ -21,10 +21,66 @@
         {{ file.content.length === 0 ? 'Info:' : file.type}}
       </ion-card-subtitle>
       <ion-card-title [color]="'primary'">
-        {{ file.content.length === 0 ? 'Open a file to start the calculation of
-        the Halstead metrics' : 'File opened: ' + file.name }}
+        {{ file.content.length === 0 ? 'Abre un archivo para empezar el calculo de metricas' 
+        : 'Archivo abierto: ' + file.name }}
       </ion-card-title>
     </ion-card-header>
+    <ion-item>
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="9">
+            <ion-button
+              color="primary"
+              class="fab-button-top-w-desc"
+              (click)="openFile()"
+              expand="block"
+            >
+              <ion-icon slot="start" name="document"></ion-icon>
+              Abrir archivo
+            </ion-button>
+          </ion-col>
+          <ion-col size="3">
+            <ion-button
+              color="danger"
+              class="fab-button-top-w-desc"
+              (click)="onClickClearVariables()"
+              expand="block"
+            >
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item *ngIf="(file.content.length > 0 && this.metrics === null) ||
+      (this.metrics !== null && (!isItStored || canBeUpdated))">
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col>
+            <ion-button
+              *ngIf="file.content.length > 0 && this.metrics === null"
+              color="secondary"
+              class="fab-button-top-w-desc"
+              (click)="onClickProcessData()"
+              expand="block"
+            >
+              <ion-icon slot="start" name="cog"></ion-icon>
+              Procesar contenido
+            </ion-button>
+            <ion-button
+              *ngIf="this.metrics !== null && (!isItStored || canBeUpdated)"
+              color="secondary"
+              class="fab-button-top-w-desc"
+              (click)="onClickSaveData()"
+              expand="block"
+            >
+              <ion-icon slot="start" name="save"></ion-icon>
+              Guardar en base de datos
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
     <ion-item
       *ngIf="file.content.length !== 0"
       detail
@@ -32,23 +88,23 @@
       (click)="presentCodeModal()"
       class="animate__animated animate__fadeIn"
     >
-      <ion-label>See content in the file</ion-label>
+      <ion-label>Ver contenido</ion-label>
     </ion-item>
     <div *ngIf="metrics !== null">
       <ion-item detail button (click)="presentTokensModal('Operators')" class="animate__animated animate__fadeIn">
-        <ion-label>See Operators</ion-label>
+        <ion-label>Ver Operadores</ion-label>
       </ion-item>
       <ion-item detail button (click)="presentTokensModal('Operands')" class="animate__animated animate__fadeIn">
-        <ion-label>See Operands</ion-label>
+        <ion-label>Ver Operandos</ion-label>
       </ion-item>
       <ion-item class="animate__animated animate__fadeIn">
         <ion-label color="primary">
-          <h2 color="tertiary" class="ion-text-center">Metrics</h2>
+          <h2 color="tertiary" class="ion-text-center">Metricas</h2>
         </ion-label>
       </ion-item>
       <ion-item class="animate__animated animate__fadeIn">
-        <ion-label color="primary">Metric</ion-label>
-        <ion-note slot="end" color="secondary">Value</ion-note>
+        <ion-label color="primary">Metrica</ion-label>
+        <ion-note slot="end" color="secondary">Valor</ion-note>
       </ion-item>
       <ion-item *ngFor="let metric of metricsArray" class="animate__animated animate__fadeIn">
         <ion-label>{{ metric[0] }}</ion-label>
@@ -56,56 +112,7 @@
           {{ myParseFloat(metric[1]) }}
         </ion-label>
       </ion-item>
-      <ion-item>
-        <ion-note slot="start" class="ion-text-small">App made for school purposes</ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-note slot="start" class="ion-text-small">Software Metrics</ion-note>
-      </ion-item>
     </div>
+    <app-credits></app-credits>
   </ion-card>
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
-      <ion-icon name="add-outline"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button
-        color="primary"
-        class="fab-button-top-w-desc"
-        data-desc="Open File"
-        (click)="openFile()"
-      >
-        <ion-icon name="document"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button
-        color="danger"
-        class="fab-button-top-w-desc"
-        data-desc="Clear"
-        (click)="onClickClearVariables()"
-      >
-        <ion-icon name="trash"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-    <ion-fab-list side="start">
-      <ion-fab-button
-        *ngIf="file.content.length > 0 && this.metrics === null"
-        color="secondary"
-        class="fab-button-top-w-desc"
-        (click)="onClickProcessData()"
-        data-desc="Process data"
-      >
-        <ion-icon name="cog"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button
-        *ngIf="this.metrics !== null && (!isItStored || canBeUpdated)"
-        color="secondary"
-        class="fab-button-top-w-desc"
-        (click)="onClickSaveData()"
-        data-desc="Save in database"
-      >
-        <ion-icon name="save"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
 </ion-content>

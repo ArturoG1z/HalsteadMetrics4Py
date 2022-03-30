@@ -102,9 +102,7 @@ export class HalsteadMetricsPage implements OnInit {
       this.file.contentHTML = hljs.highlight('python', this.file.content).value;
     };
     this.presentToast(
-      `Now you can process the file ${this.file.name}, you can start this process
-    by clicking on the button 'process data' in the floating button down in the screen,
-    also you can see the code of the file in a modal pressing the option 'show content in the file'`,
+      `Ahora puedes calcular las metricas del archivo ${this.file.name}`,
       3000
     );
   }
@@ -169,15 +167,14 @@ export class HalsteadMetricsPage implements OnInit {
     if (this.isItStored) {
       const rowFromDB = await this.storageService.getValue(this.file.name);
       if (halsteadDBRowsAreTheSame(this.currRow, rowFromDB)) {
-        message = `This file ${this.file.name} is already stored in the database`;
+        message = `El archivo ${this.file.name} ya esta almacenado en la base de datos`;
       } else {
         this.currRow.id = rowFromDB.id;
         this.canBeUpdated = true;
-        message = `This file ${this.file.name} is already stored in the database, but it has different metrics`;
+        message = `El archivo ${this.file.name} ya esta almacenado en la base de datos, pero se puede actualizar`;
       }
     } else {
-      message = `The file ${this.file.name} and his metrics are not
-      saved in the database, you can store it pressing the button 'save data'`;
+      message = `El archivo${this.file.name} y sus metricas no estan almacenados en la base de datos`;
       time = 2700;
     }
     this.presentToast(message, time);
@@ -188,7 +185,7 @@ export class HalsteadMetricsPage implements OnInit {
     this.currRow.id = await this.storageService.getMaxId() + 1;
     await this.storageService.setValue(this.file.name, this.currRow);
     this.presentToast(
-      `The file ${this.file.name} and his metrics are saved in the database`,
+      `El archivo ${this.file.name} se ha almacenado en la base de datos`,
       1500
     );
     this.isItStored = true;

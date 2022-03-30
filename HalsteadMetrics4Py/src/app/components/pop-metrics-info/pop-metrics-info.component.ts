@@ -13,7 +13,7 @@ export class PopMetricsInfoComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.metricsArray = metricsObjectToArray(this.metrics).map((e) =>
+    this.metricsArray = metricsObjectToArray(this.metrics, false).map((e) =>
       [e[0], myParseFloat(parseFloat(e[1]))]
     );
   }

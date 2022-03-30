@@ -1,5 +1,5 @@
 <app-header
-  title="Saved Calculations"
+  title="Calculos en BD"
   [isAboutShown]="true"
   [isBackShown]="false"
   [isDBPage]="true"
@@ -9,13 +9,13 @@
   <ion-list>
     <ion-list-header class="animate__animated animate__fadeIn">
       <ion-label class="ion-text-center" color="primary">
-        <h1>History of saved calculated metrics</h1>
+        <p>Metricas calculadas guardadas</p>
       </ion-label>
     </ion-list-header>
     <ion-item class="animate__animated animate__fadeIn">
       <ion-note slot="start" color="primary">ID</ion-note>
-      <ion-label>File Name</ion-label>
-      <ion-note slot="end" color="secondary">Metrics</ion-note>
+      <ion-label>Nombre de archivo</ion-label>
+      <ion-note slot="end" color="secondary">Metrica</ion-note>
     </ion-item>
     <ion-item
       *ngIf="rows.length === 0"
@@ -39,5 +39,6 @@
         {{ row.metrics.initial.N1 }}, N2: {{ row.metrics.initial.N2 }}
       </ion-note>
     </ion-item>
+    <app-credits></app-credits>
   </ion-list>
 </ion-content>
